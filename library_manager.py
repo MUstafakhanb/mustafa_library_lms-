@@ -5,9 +5,9 @@ import os
 from datetime import datetime
 import time
 import random
-import plotly.express as px
-import plotly.graph_objects as go
-from streamlit_lottie import st_lottie
+#import plotly.express as px
+#import plotly.graph_objects as go
+#from streamlit_lottie import st_lottie
 import requests
 
 #set page configuration
@@ -214,7 +214,7 @@ def get_library_stats():
 
 def create_visualizations(stats):
     if stats['total_books'] > 0:
-        fig_read_status = go.Figure(data=[go.Pie(
+        fig_read_status = go.Figure(data=[go.Pie( # type: ignore
             labels=['Read', 'Unread'],
             values=[stats['read_books'], stats['total_books'] - stats['read_books']],
             hole=0.4,
@@ -232,12 +232,12 @@ def create_visualizations(stats):
             'Genre': list(stats['genres'].keys()),
             'Count': list(stats['genres'].values())
         })
-        fig_genres = px.bar(
+        fig_genres = px.bar( # type: ignore
             genres_df,
             x='Genre', 
             y='Count',
          color='Count',
-         color_continuous_scale=px.colors.sequential.Blues
+         color_continuous_scale=px.colors.sequential.Blues # type: ignore
         )
         fig_genres.update_layout(
             title_text='Book by publication decade',
@@ -251,7 +251,7 @@ def create_visualizations(stats):
             'Decade': [f'{decade}s' for decade in stats['decades'].keys()],
             'Count': list(stats['decades'].values())
         })
-        fig_decades = px.line(
+        fig_decades = px.line( # type: ignore
             decades_df,
             x='Decade',
             y='Count',
@@ -271,7 +271,7 @@ def create_visualizations(stats):
         lottie_book = load_lottieurl("https://assets.lottiefiles.com/temp/if20_akAfIn.json")
         if lottie_book:
             with st.sidebar.container(border=True):
-                st_lottie(lottie_book, height=200, key='book_animation')
+                st_lottie(lottie_book, height=200, key='book_animation') # type: ignore
     
 
     new_option = st.sidebar.radio(
@@ -378,7 +378,7 @@ if st.session_state.current_view == "add":
                                 }</span></p>
                                 </div>
     """,unsafe_allow_html=True)
-elif search_term:
+elif search_term: # type: ignore
                             st.markdown("<div class='warning-message'>No results found. Try a different search term.</div>",unsafe_allow_html=True)
 elif st.session_state.current_view == "stats":
     st.markdown("<h2 class='sub-header'>Library Statistics</h2>", unsafe_allow_html=True)
